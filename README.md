@@ -118,7 +118,7 @@ Sin backend — todo corre en el navegador
 
 
 📂 Archivos incluidos
-toxiscan_v3.html               ← La aplicación completa
+index.html               ← La aplicación completa
 README.md                      ← Este archivo
 
 ⚠️ Disclaimer
