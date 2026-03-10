@@ -2363,7 +2363,7 @@ function stopInlineCamera() {
 // ==================== AI PROVIDER SYSTEM ====================
 const AI_PROVIDERS = {
   gemini: {
-    name: 'Gemini 2.0 Flash',
+    name: 'Gemini 2.0 Flash Lite',
     placeholder: 'AIzaSy...',
     hint: '✦ <b>Google Gemini</b> — Gratis: 1,500 req/día · Obtené tu clave en <a href="https://aistudio.google.com/apikey" target="_blank" style="color:var(--accent)">aistudio.google.com/apikey</a>',
     validate: k => k.length >= 20,
@@ -2442,7 +2442,7 @@ async function callAI(systemPrompt, userMessage, maxTokens) {
 
   if (provider === 'gemini') {
     const prompt = systemPrompt ? systemPrompt + '\n\nUser: ' + userMessage : userMessage;
-    const res = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' + key, {
+    const res = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=' + key, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }], generationConfig: { temperature: 0.3, maxOutputTokens: maxTokens || 800 } })
@@ -2633,7 +2633,7 @@ Be concise, evidence-based, and cite regulations when relevant. Use markdown for
     removeTypingIndicator();
     const msg = e.message || e.toString();
     if (msg.includes('quota') || msg.includes('RESOURCE_EXHAUSTED') || msg.includes('exceeded') || msg.includes('429')) {
-      addBotMessage('**⏳ Rate limit reached**\n\nYou\'ve hit the daily API limit.\n\n**Options:**\n- Wait until tomorrow — free tier resets at midnight\n- Get a new API key at [aistudio.google.com/apikey](https://aistudio.google.com/apikey) → **Create API key in new project**');
+      addBotMessage('**⏳ Rate limit reached**\n\nHit the per-minute limit — not the daily one. Just **wait 60 seconds** and try again.\n\nIf it keeps happening:\n- Go to [aistudio.google.com/apikey](https://aistudio.google.com/apikey)\n- Click **Create API key in new project** (resets quota)\n- Paste the new key in **⚙️ Settings**');
     } else if (msg.includes('API_KEY') || msg.includes('invalid') || msg.includes('401') || msg.includes('Unauthorized')) {
       addBotMessage('**🔑 Invalid API key**\n\nCheck your key in **⚙️ Settings**.');
     } else {
